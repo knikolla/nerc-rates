@@ -82,3 +82,25 @@ def test_rates_get_value_at():
     assert r.get_value_at("Test Rate", "2021-01") == "2"
     with pytest.raises(ValueError):
         assert r.get_value_at("Test Rate", "2019-01")
+
+
+def test_fail_with_duplicate_names():
+    with pytest.raises(ValueError):
+        rates.Rates(
+            [
+                {
+                    "name": "Test Rate",
+                    "history": [
+                        {"value": "1", "from": "2020-01", "until": "2020-12"},
+                        {"value": "2", "from": "2021-01"},
+                    ],
+                },
+                {
+                    "name": "Test Rate",
+                    "history": [
+                        {"value": "1", "from": "2020-01", "until": "2020-12"},
+                        {"value": "2", "from": "2021-01"},
+                    ],
+                },
+            ]
+        )

@@ -54,9 +54,18 @@ class RateItem(Base):
         return data
 
 
+def check_for_duplicates(items):
+    data = {}
+    for item in items:
+        if item["name"] in data:
+            raise ValueError(f"found duplicate name \"{item['name']}\" in list")
+        data[item["name"]] = item
+    return data
+
+
 RateItemDict = Annotated[
     dict[str, RateItem],
-    pydantic.BeforeValidator(lambda items: {x["name"]: x for x in items}),
+    pydantic.BeforeValidator(check_for_duplicates),
 ]
 
 
