@@ -8,7 +8,7 @@ def test_load_from_url():
     mock_response_text = """
     - name: CPU SU Rate
       history:
-        - value: 0.013
+        - value: "0.013"
           from: 2023-06
     """
     with requests_mock.Mocker() as m:

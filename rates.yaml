@@ -3,32 +3,32 @@
 #################################################
 - name: CPU SU Rate
   history:
-    - value: 0.013
+    - value: "0.013"
       from: 2023-06
 
 - name: GPUA100 SU Rate
   history:
-    - value: 1.803
+    - value: "1.803"
       from: 2023-06
 
 - name: GPUA100SXM4 SU Rate
   history:
-    - value: 2.078
+    - value: "2.078"
       from: 2023-06
 
 - name: GPUV100 SU Rate
   history:
-    - value: 1.214
+    - value: "1.214"
       from: 2023-06
 
 - name: GPUK80 SU Rate
   history:
-    - value: 0.463
+    - value: "0.463"
       from: 2023-06
 
 - name: Storage GB Rate
   history:
-    - value: 0.000009
+    - value: "0.000009"
       from: 2023-06
 
 #################################################
@@ -36,10 +36,10 @@
 #################################################
 - name: Charge for Stopped Instances
   history:
-    - value: False
+    - value: "False"
       from: 2023-06
       until: 2024-02
-    - value: True
+    - value: "True"
       from: 2024-03
 
 #################################################
@@ -47,10 +47,10 @@
 #################################################
 - name: vCPUs in CPU SU
   history:
-    - value: 1
+    - value: "1"
       from: 2023-06
 
 - name: RAM in CPU SU
   history:
-    - value: 4096
+    - value: "4096"
       from: 2023-06
