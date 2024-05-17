@@ -1,3 +1,5 @@
+# For python < 3.11, we need typing_extensions.Self instead of typing.Self
+from typing_extensions import Self
 from typing import Annotated
 
 import datetime
@@ -21,6 +23,13 @@ class RateValue(Base):
     value: str
     date_from: Annotated[DateField, pydantic.Field(alias="from")]
     date_until: Annotated[DateField, pydantic.Field(alias="until", default=None)]
+
+    @pydantic.model_validator(mode="after")
+    @classmethod
+    def validate_date_range(cls, data: Self):
+        if data.date_until and data.date_until < data.date_from:
+            raise ValueError("date_until must be after date_from")
+        return data
 
 
 class RateItem(Base):

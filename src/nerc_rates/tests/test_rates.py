@@ -1,7 +1,7 @@
 import pytest
 import requests_mock
 
-from nerc_rates import load_from_url, rates
+from nerc_rates import load_from_url, rates, models
 
 
 def test_load_from_url():
@@ -15,6 +15,12 @@ def test_load_from_url():
         m.get(rates.DEFAULT_URL, text=mock_response_text)
         r = load_from_url()
         assert r.get_value_at("CPU SU Rate", "2023-06") == "0.013"
+
+
+def test_invalid_date_order():
+    rate = {"value": "1", "from": "2020-04", "until": "2020-03"}
+    with pytest.raises(ValueError):
+        models.RateValue.model_validate(rate)
 
 
 def test_rates_get_value_at():
