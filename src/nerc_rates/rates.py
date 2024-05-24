@@ -3,20 +3,26 @@ import yaml
 
 from .models import Rates
 
-DEFAULT_URL = "https://raw.githubusercontent.com/knikolla/nerc-rates/main/rates.yaml"
+DEFAULT_RATES_FILE = "rates.yaml"
+DEFAULT_RATES_URL = (
+    "https://raw.githubusercontent.com/CCI-MOC/nerc-rates/main/rates.yaml"
+)
 
 
-def load_from_url(url=DEFAULT_URL) -> Rates:
+def load_from_url(url: str | None = None) -> Rates:
+    if url is None:
+        url = DEFAULT_RATES_URL
+
     r = requests.get(url, allow_redirects=True)
-    # Using the BaseLoader prevents conversion of numeric
-    # values to floats and loads them as strings.
+    r.raise_for_status()
     config = yaml.safe_load(r.content.decode("utf-8"))
     return Rates.model_validate(config)
 
 
-def load_from_file() -> Rates:
-    with open("rates.yaml", "r") as f:
-        # Using the BaseLoader prevents conversion of numeric
-        # values to floats and loads them as strings.
+def load_from_file(path: str | None = None) -> Rates:
+    if path is None:
+        path = DEFAULT_RATES_FILE
+
+    with open(path, "r") as f:
         config = yaml.safe_load(f)
     return Rates.model_validate(config)

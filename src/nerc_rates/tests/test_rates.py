@@ -12,7 +12,7 @@ def test_load_from_url():
           from: 2023-06
     """
     with requests_mock.Mocker() as m:
-        m.get(rates.DEFAULT_URL, text=mock_response_text)
+        m.get(rates.DEFAULT_RATES_URL, text=mock_response_text)
         r = load_from_url()
         assert r.get_value_at("CPU SU Rate", "2023-06") == "0.013"
 
