@@ -1,4 +1,5 @@
 import pytest
+import pydantic
 import requests_mock
 
 from nerc_rates import load_from_url, rates, models
@@ -19,7 +20,9 @@ def test_load_from_url():
 
 def test_invalid_date_order():
     rate = {"value": "1", "from": "2020-04", "until": "2020-03"}
-    with pytest.raises(ValueError):
+    with pytest.raises(
+        pydantic.ValidationError, match="date_until must be after date_from"
+    ):
         models.RateValue.model_validate(rate)
 
 
@@ -61,7 +64,7 @@ def test_invalid_date_order():
     ],
 )
 def test_invalid_date_overlap(rate):
-    with pytest.raises(ValueError):
+    with pytest.raises(pydantic.ValidationError, match="date ranges overlap"):
         models.RateItem.model_validate(rate)
 
 
@@ -85,7 +88,9 @@ def test_rates_get_value_at():
 
 
 def test_fail_with_duplicate_names():
-    with pytest.raises(ValueError):
+    with pytest.raises(
+        pydantic.ValidationError, match=r"found duplicate name .* in list"
+    ):
         rates.Rates(
             [
                 {
