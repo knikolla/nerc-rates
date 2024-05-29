@@ -15,6 +15,10 @@ dependencies = [
   "requests",
 ]
 
+[project.entry-points."console_scripts"]
+validate-rates-file = "nerc_rates.cmd.validate_rates_file:main"
+
+
 [build-system]
 requires = [
   "setuptools>=42",
